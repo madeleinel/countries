@@ -1,0 +1,24 @@
+version: '3'
+services:
+
+  countries:
+    build:
+      context: ./countries
+      dockerfile: Dockerfile
+    volumes:
+      - ./countries:/code
+    ports:
+      - 8888:8888
+    tty: true
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    env_file: ./countries/.env
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - 9999:9999
